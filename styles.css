@@ -199,7 +199,7 @@ svg { width: 18px; height: 18px; stroke-width: 1.8; }
 .payment-modal h2 { margin: 7px 0 2px; font-family: Georgia, serif; font-size: 39px; }
 .payment-note { margin: 0 0 17px; color: var(--muted); font-size: 10px; }
 .qr-frame { width: 196px; height: 196px; margin: 0 auto 15px; padding: 9px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 6px; background: white; }
-.qr-frame img { display: none; max-width: 100%; max-height: 100%; }
+.qr-frame img { display: none; max-width: 100%; max-height: 100%; -webkit-touch-callout: default; user-select: auto; }
 #qrEmpty { display: grid; place-items: center; gap: 8px; color: var(--muted); }
 #qrEmpty svg { width: 58px; height: 58px; stroke-width: 1; }
 #qrEmpty strong { font-size: 11px; }

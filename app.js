@@ -1,7 +1,7 @@
-const STORAGE_KEY = "split-pay-board-v3";
+const STORAGE_KEY = "split-pay-board-v4";
 
 const seedData = {
-  owner: { name: "我", method: "微信", qr: "", paymentUrl: "" },
+  owner: { name: "我", method: "微信", qr: "assets/wechat-pay.png", paymentUrl: "" },
   people: [
     { id: "me", name: "我", role: "垫付人", color: "gray" },
     { id: "yujia", name: "玉家", role: "女生局成员", color: "green" },
@@ -28,11 +28,13 @@ const seedData = {
     },
     {
       id: "voucher", title: "欢聚 4–5 人餐券", merchant: "一沙一城 · 岩烤牛扒", amount: 442.3,
-      date: "2026-07-19", category: "团购凭证", receipt: "assets/voucher-442.jpg", type: "reference", splits: {}
+      date: "2026-07-19", category: "团购餐券", receipt: "assets/voucher-442.jpg", type: "settled",
+      splits: { me: 88.46, yujia: 88.46, peiqi: 88.46, yueru: 88.46, tongtong: 88.46 }
     },
     {
       id: "store", title: "便利店零食与餐饮", merchant: "广东美宜佳便利店", amount: 50.5,
-      date: "2026-07-19 00:08–00:44", category: "消费凭证", receipt: "assets/store-50.jpg", type: "reference", splits: {}
+      date: "2026-07-19 00:08–00:44", category: "便利店", receipt: "assets/store-50.jpg", type: "settled",
+      splits: { me: 10.1, yujia: 10.1, peiqi: 10.1, yueru: 10.1, tongtong: 10.1 }
     }
   ],
   payments: [],
