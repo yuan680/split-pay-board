@@ -1,4 +1,4 @@
-const STORAGE_KEY = "split-pay-board-v8";
+const STORAGE_KEY = "split-pay-board-v9";
 
 const seedData = {
   owner: {
@@ -6,6 +6,23 @@ const seedData = {
     method: "支付宝",
     qr: "assets/alipay-qr.png",
     paymentUrl: "https://qr.alipay.com/fkx17087b7ip5a0f8zxjs16",
+    paymentByAmount: {
+      "52.50": {
+        qr: "assets/alipay-52-qr.png",
+        paymentUrl: "https://qr.alipay.com/fkx17501gsuzfprj3tapd01",
+        fixedAmount: true
+      },
+      "239.06": {
+        qr: "assets/alipay-23906-qr.png",
+        paymentUrl: "https://qr.alipay.com/fkx157510ohlxomoontao6d",
+        fixedAmount: true
+      },
+      "293.56": {
+        qr: "assets/alipay-29356-qr.png",
+        paymentUrl: "https://qr.alipay.com/fkx116637aano8rg63vife9",
+        fixedAmount: true
+      }
+    },
     backup: {
       method: "微信",
       qr: "assets/wechat-qr.png",
@@ -234,14 +251,17 @@ function openPayment(personId) {
 }
 
 function paymentConfig(channel = activePayChannel) {
-  return channel === "backup" && state.owner.backup ? state.owner.backup : state.owner;
+  if (channel === "backup" && state.owner.backup) return state.owner.backup;
+  const amountKey = activePayPerson ? dueFor(activePayPerson).toFixed(2) : "";
+  const amountConfig = state.owner.paymentByAmount?.[amountKey];
+  return amountConfig ? { ...state.owner, ...amountConfig } : state.owner;
 }
 
 function setPayChannel(channel) {
   activePayChannel = channel;
   const config = paymentConfig(channel);
   document.querySelectorAll("[data-pay-channel]").forEach((button) => button.classList.toggle("active", button.dataset.payChannel === channel));
-  document.querySelector("#paymentNote").textContent = `${config.method}收款 · 佛山女生局`;
+  document.querySelector("#paymentNote").textContent = `${config.method}${config.fixedAmount ? "定额" : ""}收款 · 佛山女生局`;
   const jumpPay = document.querySelector("#jumpPay");
   jumpPay.href = paymentTarget(activePayPerson, config);
   jumpPay.target = "_self";
