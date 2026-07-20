@@ -198,6 +198,11 @@ svg { width: 18px; height: 18px; stroke-width: 1.8; }
 .payment-kicker { color: var(--muted); font-size: 11px; }
 .payment-modal h2 { margin: 7px 0 2px; font-family: Georgia, serif; font-size: 39px; }
 .payment-note { margin: 0 0 17px; color: var(--muted); font-size: 10px; }
+.pay-channel-switch { width: 236px; height: 36px; margin: 0 auto 10px; padding: 3px; display: grid; grid-template-columns: 1fr 1fr; gap: 3px; border-radius: 5px; background: #eff1ee; }
+.pay-channel-switch button { display: flex; align-items: center; justify-content: center; gap: 5px; border: 0; border-radius: 4px; background: transparent; color: var(--muted); font-size: 10px; cursor: pointer; }
+.pay-channel-switch button.active { color: var(--blue); background: white; box-shadow: 0 2px 7px rgba(0,0,0,.08); font-weight: 700; }
+.pay-channel-switch button[data-pay-channel="backup"].active { color: var(--green); }
+.pay-channel-switch svg { width: 14px; height: 14px; }
 .qr-frame { width: 236px; height: 236px; margin: 0 auto 15px; padding: 9px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 6px; background: white; }
 .qr-image-link { display: none; width: 100%; height: 100%; place-items: center; }
 .qr-frame img { display: block; width: 100%; height: 100%; object-fit: contain; cursor: zoom-in; -webkit-touch-callout: default; user-select: auto; }
@@ -273,5 +278,5 @@ svg { width: 18px; height: 18px; stroke-width: 1.8; }
   .toolbar-row { align-items: stretch; }.toolbar-row select { width: 116px; min-width: 116px; }
   .bill-card { padding: 11px; grid-template-columns: 62px minmax(0,1fr) auto; gap: 10px; }.receipt-thumb { width: 62px; height: 62px; }.bill-copy h3 { font-size: 12px; }.bill-copy p { font-size: 9px; }.bill-total strong { font-size: 16px; }
   .people-grid { grid-template-columns: 1fr; }
-  .modal { padding: 24px 18px; }.modal-actions { grid-template-columns: 1fr; }.form-grid { grid-template-columns: 1fr; }.check-grid { grid-template-columns: 1fr 1fr; }.qr-frame { width: min(248px, 76vw); height: min(248px, 76vw); }
+  .modal { padding: 24px 18px; }.modal-actions { grid-template-columns: 1fr; }.form-grid { grid-template-columns: 1fr; }.check-grid { grid-template-columns: 1fr 1fr; }.qr-frame { width: min(248px, 76vw); height: min(248px, 76vw); }.pay-channel-switch { width: min(248px, 76vw); }
 }

@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#f7f5ef" />
     <meta name="robots" content="noindex, nofollow, noarchive" />
     <title>这顿我先垫 · 分账看板</title>
-    <link rel="stylesheet" href="styles.css?v=7" />
+    <link rel="stylesheet" href="styles.css?v=8" />
   </head>
   <body>
     <div class="app-shell">
@@ -149,6 +149,10 @@
         <div class="payment-kicker">向 <span id="payPersonName">—</span> 收款</div>
         <h2 id="paymentTitle">¥0.00</h2>
         <p class="payment-note" id="paymentNote">聚会分账</p>
+        <div class="pay-channel-switch" role="group" aria-label="支付方式">
+          <button class="active" data-pay-channel="primary"><i data-lucide="badge-dollar-sign"></i><span>支付宝</span></button>
+          <button data-pay-channel="backup"><i data-lucide="message-circle"></i><span>微信备用</span></button>
+        </div>
         <div class="qr-frame" id="qrFrame">
           <a id="qrImageLink" class="qr-image-link" href="#" target="_self" aria-label="查看收款二维码大图">
             <img id="qrImage" alt="收款二维码" />
@@ -214,6 +218,6 @@
     <div class="toast" id="toast"><i data-lucide="circle-check"></i><span></span></div>
 
     <script src="assets/lucide.min.js"></script>
-    <script src="app.js?v=7"></script>
+    <script src="app.js?v=8"></script>
   </body>
 </html>

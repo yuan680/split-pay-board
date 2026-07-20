@@ -1,11 +1,16 @@
-const STORAGE_KEY = "split-pay-board-v6";
+const STORAGE_KEY = "split-pay-board-v8";
 
 const seedData = {
   owner: {
     name: "我",
-    method: "微信",
-    qr: "assets/wechat-qr.png",
-    paymentUrl: "wxp://f2f0VLIaTxIP5I596o3y44jm6p-cqXPH5D9yOGaIzJb99i_5N6eBi7OTSBu5gy6FjuCR"
+    method: "支付宝",
+    qr: "assets/alipay-qr.png",
+    paymentUrl: "https://qr.alipay.com/fkx17087b7ip5a0f8zxjs16",
+    backup: {
+      method: "微信",
+      qr: "assets/wechat-qr.png",
+      paymentUrl: "wxp://f2f0VLIaTxIP5I596o3y44jm6p-cqXPH5D9yOGaIzJb99i_5N6eBi7OTSBu5gy6FjuCR"
+    }
   },
   people: [
     { id: "me", name: "我", role: "垫付人", color: "gray" },
@@ -53,6 +58,7 @@ const seedData = {
 let state = loadState();
 let currentFilter = "pending";
 let activePayPerson = null;
+let activePayChannel = "primary";
 
 function cloneSeed() { return JSON.parse(JSON.stringify(seedData)); }
 function loadState() {
@@ -222,34 +228,45 @@ function openPayment(personId) {
   const lines = allocationsFor(personId);
   document.querySelector("#payPersonName").textContent = person.name;
   document.querySelector("#paymentTitle").textContent = money(dueFor(personId));
-  document.querySelector("#paymentNote").textContent = `${state.owner.method}收款 · 佛山女生局`;
-  const jumpPay = document.querySelector("#jumpPay");
-  jumpPay.href = paymentTarget(personId);
-  jumpPay.target = /^https?:\/\//i.test(jumpPay.href) ? "_blank" : "_self";
-  jumpPay.querySelector("span").textContent = state.owner.paymentUrl ? "打开支付" : `打开${state.owner.method}`;
   document.querySelector("#payBreakdown").innerHTML = lines.map((line) => `<div class="detail-line"><span>${line.bill.category}</span><strong>${money(line.amount)}</strong></div>`).join("");
+  setPayChannel("primary");
+  openModal("paymentModal");
+}
+
+function paymentConfig(channel = activePayChannel) {
+  return channel === "backup" && state.owner.backup ? state.owner.backup : state.owner;
+}
+
+function setPayChannel(channel) {
+  activePayChannel = channel;
+  const config = paymentConfig(channel);
+  document.querySelectorAll("[data-pay-channel]").forEach((button) => button.classList.toggle("active", button.dataset.payChannel === channel));
+  document.querySelector("#paymentNote").textContent = `${config.method}收款 · 佛山女生局`;
+  const jumpPay = document.querySelector("#jumpPay");
+  jumpPay.href = paymentTarget(activePayPerson, config);
+  jumpPay.target = "_self";
+  jumpPay.querySelector("span").textContent = `打开${config.method}`;
   const image = document.querySelector("#qrImage");
   const imageLink = document.querySelector("#qrImageLink");
   const empty = document.querySelector("#qrEmpty");
-  if (state.owner.qr) {
-    image.src = state.owner.qr;
-    imageLink.href = state.owner.qr;
+  if (config.qr) {
+    image.src = config.qr;
+    imageLink.href = config.qr;
     imageLink.style.display = "grid";
     empty.style.display = "none";
   } else {
     imageLink.style.display = "none";
     empty.style.display = "grid";
   }
-  openModal("paymentModal");
 }
 
-function paymentTarget(personId) {
+function paymentTarget(personId, config = paymentConfig()) {
   const person = personById(personId);
   const amount = dueFor(personId).toFixed(2);
-  const fallback = state.owner.method === "支付宝"
+  const fallback = config.method === "支付宝"
     ? "alipays://platformapi/startapp?appId=20000056"
     : "weixin://";
-  return (state.owner.paymentUrl || fallback)
+  return (config.paymentUrl || fallback)
     .replaceAll("{amount}", encodeURIComponent(amount))
     .replaceAll("{name}", encodeURIComponent(person.name));
 }
@@ -291,6 +308,8 @@ document.querySelectorAll("[data-filter]").forEach((button) => button.addEventLi
   document.querySelectorAll("[data-filter]").forEach((item) => item.classList.toggle("active", item === button));
   renderCollections(); lucide.createIcons();
 }));
+
+document.querySelectorAll("[data-pay-channel]").forEach((button) => button.addEventListener("click", () => setPayChannel(button.dataset.payChannel)));
 
 document.querySelector("#openSettings").addEventListener("click", () => openModal("settingsModal"));
 document.querySelector("#mobileSettings").addEventListener("click", () => openModal("settingsModal"));
