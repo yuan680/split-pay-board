@@ -1,14 +1,14 @@
-const STORAGE_KEY = "split-pay-board-v2";
+const STORAGE_KEY = "split-pay-board-v3";
 
 const seedData = {
-  owner: { name: "我", method: "微信", qr: "" },
+  owner: { name: "我", method: "微信", qr: "", paymentUrl: "" },
   people: [
     { id: "me", name: "我", role: "垫付人", color: "gray" },
     { id: "yujia", name: "玉家", role: "女生局成员", color: "green" },
     { id: "peiqi", name: "佩琪", role: "女生局成员", color: "coral" },
     { id: "yueru", name: "月如", role: "女生局成员", color: "ochre" },
     { id: "tongtong", name: "桐桐", role: "女生局成员", color: "blue" },
-    { id: "boyfriend", name: "玉家男友", role: "午饭加入", color: "gray" }
+    { id: "boyfriend", name: "小李哥", role: "午饭加入", color: "gray" }
   ],
   bills: [
     {
@@ -189,6 +189,7 @@ function renderPaymentConfig() {
   const configured = Boolean(state.owner.qr);
   document.querySelector("#paymentConfigStatus").textContent = configured ? `${state.owner.method} · 已配置` : "未配置收款码";
   document.querySelector("#ownerName").value = state.owner.name;
+  document.querySelector("#paymentUrl").value = state.owner.paymentUrl || "";
   document.querySelectorAll("input[name='payMethod']").forEach((radio) => { radio.checked = radio.value === state.owner.method; });
   const preview = document.querySelector("#qrPreview");
   const prompt = document.querySelector("#uploadPrompt");
@@ -215,6 +216,7 @@ function openPayment(personId) {
   document.querySelector("#payPersonName").textContent = person.name;
   document.querySelector("#paymentTitle").textContent = money(dueFor(personId));
   document.querySelector("#paymentNote").textContent = `${state.owner.method}收款 · 佛山女生局`;
+  document.querySelector("#jumpPay span").textContent = state.owner.paymentUrl ? "跳转支付" : `打开${state.owner.method}`;
   document.querySelector("#payBreakdown").innerHTML = lines.map((line) => `<div class="detail-line"><span>${line.bill.category}</span><strong>${money(line.amount)}</strong></div>`).join("");
   const image = document.querySelector("#qrImage");
   const empty = document.querySelector("#qrEmpty");
@@ -273,6 +275,24 @@ document.querySelector("#copyRequest").addEventListener("click", async () => {
   catch { showToast("当前浏览器未开放剪贴板权限"); }
 });
 
+document.querySelector("#jumpPay").addEventListener("click", () => {
+  if (!activePayPerson) return;
+  const person = personById(activePayPerson);
+  const amount = dueFor(activePayPerson).toFixed(2);
+  const fallback = state.owner.method === "支付宝"
+    ? "alipays://platformapi/startapp?appId=20000056"
+    : "weixin://";
+  const configured = (state.owner.paymentUrl || "").trim();
+  const target = (configured || fallback)
+    .replaceAll("{amount}", encodeURIComponent(amount))
+    .replaceAll("{name}", encodeURIComponent(person.name));
+  if (!/^(https?:\/\/|alipays:\/\/|weixin:\/\/)/i.test(target)) {
+    showToast("支付链接格式不正确");
+    return;
+  }
+  window.location.href = target;
+});
+
 document.querySelector("#qrUpload").addEventListener("change", (event) => {
   const file = event.target.files[0]; if (!file) return;
   const reader = new FileReader();
@@ -297,6 +317,7 @@ document.querySelector("#qrUpload").addEventListener("change", (event) => {
 document.querySelector("#saveSettings").addEventListener("click", () => {
   state.owner.name = document.querySelector("#ownerName").value.trim() || "我";
   state.owner.method = document.querySelector("input[name='payMethod']:checked").value;
+  state.owner.paymentUrl = document.querySelector("#paymentUrl").value.trim();
   saveState(); closeModal("settingsModal"); renderPaymentConfig(); showToast("收款设置已保存");
 });
 

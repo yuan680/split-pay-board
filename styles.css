@@ -205,7 +205,8 @@ svg { width: 18px; height: 18px; stroke-width: 1.8; }
 #qrEmpty strong { font-size: 11px; }
 .pay-breakdown { margin: 0 0 18px; padding: 10px 13px; border-radius: 5px; background: #f5f6f3; text-align: left; }
 .pay-breakdown .detail-line { font-size: 10px; }
-.modal-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.modal-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.modal-actions button { padding-left: 10px; padding-right: 10px; font-size: 11px; }
 .modal-heading { margin-bottom: 22px; display: flex; align-items: center; gap: 12px; }
 .modal-icon { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 6px; color: var(--green); background: var(--green-soft); }
 .modal-icon.coral-bg { color: var(--coral); background: var(--coral-soft); }

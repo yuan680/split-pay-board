@@ -108,7 +108,7 @@
                 <span><i data-lucide="info"></i></span>
                 <div>
                   <strong>午饭分摊口径</strong>
-                  <p>315 元按 6 人均分，每人 52.50 元，含玉家男友。</p>
+                  <p>315 元按 6 人均分，每人 52.50 元，含小李哥。</p>
                 </div>
               </section>
             </aside>
@@ -156,6 +156,7 @@
         <div class="pay-breakdown" id="payBreakdown"></div>
         <div class="modal-actions">
           <button class="secondary-btn" id="copyRequest"><i data-lucide="copy"></i>复制收款信息</button>
+          <button class="secondary-btn" id="jumpPay"><i data-lucide="external-link"></i><span>打开微信</span></button>
           <button class="primary-btn" id="markPaid"><i data-lucide="check"></i>确认已收款</button>
         </div>
       </div>
@@ -175,6 +176,8 @@
           <label><input type="radio" name="payMethod" value="微信" checked /><span class="method wechat"><i data-lucide="message-circle"></i>微信</span></label>
           <label><input type="radio" name="payMethod" value="支付宝" /><span class="method alipay"><i data-lucide="badge-dollar-sign"></i>支付宝</span></label>
         </div>
+        <label class="field-label" for="paymentUrl">支付跳转链接（选填）</label>
+        <input class="text-input" id="paymentUrl" placeholder="https:// 或 alipays://" />
         <label class="upload-zone" for="qrUpload">
           <input type="file" id="qrUpload" accept="image/*" />
           <img id="qrPreview" alt="收款码预览" />
