@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f7f5ef" />
+    <title>这顿我先垫 · 分账看板</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark">垫</div>
+          <div>
+            <strong>这顿我先垫</strong>
+            <span>佛山女生局 · 7月18–19日</span>
+          </div>
+        </div>
+
+        <nav class="nav-list" aria-label="主导航">
+          <button class="nav-item active" data-view="overview">
+            <i data-lucide="layout-dashboard"></i><span>收款总览</span>
+          </button>
+          <button class="nav-item" data-view="bills">
+            <i data-lucide="receipt-text"></i><span>账单流水</span>
+          </button>
+          <button class="nav-item" data-view="people">
+            <i data-lucide="users"></i><span>参与人</span>
+          </button>
+        </nav>
+
+        <div class="sidebar-foot">
+          <button class="settings-row" id="openSettings">
+            <span class="settings-icon"><i data-lucide="qr-code"></i></span>
+            <span><strong>收款设置</strong><small id="paymentConfigStatus">未配置收款码</small></span>
+            <i data-lucide="chevron-right"></i>
+          </button>
+          <p>数据仅保存在当前浏览器</p>
+        </div>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow" id="viewEyebrow">COLLECTION BOARD</p>
+            <h1 id="viewTitle">收款总览</h1>
+          </div>
+          <div class="top-actions">
+            <button class="icon-btn" id="resetData" title="恢复示例数据" aria-label="恢复示例数据">
+              <i data-lucide="rotate-ccw"></i>
+            </button>
+            <button class="primary-btn" id="addBillBtn">
+              <i data-lucide="plus"></i><span>新增账单</span>
+            </button>
+          </div>
+        </header>
+
+        <section id="overviewView" class="view active">
+          <div class="summary-strip">
+            <article class="summary-main">
+              <span class="metric-label">待收金额</span>
+              <div class="metric-value" id="outstandingTotal">¥0.00</div>
+              <div class="progress-line"><span id="collectionProgress"></span></div>
+              <p><strong id="collectedTotal">¥0.00</strong> 已收 · <span id="progressText">0%</span></p>
+            </article>
+            <article class="summary-cell">
+              <span class="metric-icon mint"><i data-lucide="receipt"></i></span>
+              <div><span>账单总额</span><strong id="expenseTotal">¥0.00</strong></div>
+            </article>
+            <article class="summary-cell">
+              <span class="metric-icon coral"><i data-lucide="users-round"></i></span>
+              <div><span>待付款</span><strong id="pendingPeople">0 人</strong></div>
+            </article>
+            <article class="summary-cell">
+              <span class="metric-icon ochre"><i data-lucide="circle-check-big"></i></span>
+              <div><span>已结清</span><strong id="paidPeople">0 人</strong></div>
+            </article>
+          </div>
+
+          <div class="content-grid">
+            <section class="panel collection-panel">
+              <div class="panel-head">
+                <div>
+                  <h2>待收款</h2>
+                  <p>点击姓名展开对应账单</p>
+                </div>
+                <div class="segmented" role="group" aria-label="收款筛选">
+                  <button class="active" data-filter="pending">待收</button>
+                  <button data-filter="paid">已收</button>
+                  <button data-filter="all">全部</button>
+                </div>
+              </div>
+              <div id="collectionList" class="collection-list"></div>
+            </section>
+
+            <aside class="right-rail">
+              <section class="panel activity-panel">
+                <div class="panel-head compact">
+                  <h2>最新动态</h2>
+                  <button class="text-btn" data-view-link="bills">全部流水</button>
+                </div>
+                <div id="activityList" class="activity-list"></div>
+              </section>
+
+              <section class="note-band">
+                <span><i data-lucide="info"></i></span>
+                <div>
+                  <strong>午饭分摊口径</strong>
+                  <p>315 元按 6 人均分，每人 52.50 元，含玉家男友。</p>
+                </div>
+              </section>
+            </aside>
+          </div>
+        </section>
+
+        <section id="billsView" class="view">
+          <div class="toolbar-row">
+            <div class="search-box"><i data-lucide="search"></i><input id="billSearch" placeholder="搜索商户或账单" /></div>
+            <select id="billFilter" aria-label="筛选账单类型">
+              <option value="all">全部账单</option>
+              <option value="settled">已分摊</option>
+              <option value="reference">仅凭证</option>
+            </select>
+          </div>
+          <div id="billList" class="bill-list"></div>
+        </section>
+
+        <section id="peopleView" class="view">
+          <div class="people-headline">
+            <div><h2>参与人</h2><p>本次聚会共 6 人，垫付人的自付份额计入账单，但不进入待收款。</p></div>
+          </div>
+          <div id="peopleGrid" class="people-grid"></div>
+        </section>
+      </main>
+    </div>
+
+    <nav class="mobile-nav" aria-label="手机端导航">
+      <button class="active" data-view="overview"><i data-lucide="layout-dashboard"></i><span>总览</span></button>
+      <button data-view="bills"><i data-lucide="receipt-text"></i><span>流水</span></button>
+      <button data-view="people"><i data-lucide="users"></i><span>成员</span></button>
+      <button id="mobileSettings"><i data-lucide="qr-code"></i><span>收款码</span></button>
+    </nav>
+
+    <div class="modal-backdrop" id="paymentModal" aria-hidden="true">
+      <div class="modal payment-modal" role="dialog" aria-modal="true" aria-labelledby="paymentTitle">
+        <button class="modal-close" data-close="paymentModal" aria-label="关闭"><i data-lucide="x"></i></button>
+        <div class="payment-kicker">向 <span id="payPersonName">—</span> 收款</div>
+        <h2 id="paymentTitle">¥0.00</h2>
+        <p class="payment-note" id="paymentNote">聚会分账</p>
+        <div class="qr-frame" id="qrFrame">
+          <img id="qrImage" alt="收款二维码" />
+          <div id="qrEmpty"><i data-lucide="qr-code"></i><strong>收款码未配置</strong></div>
+        </div>
+        <div class="pay-breakdown" id="payBreakdown"></div>
+        <div class="modal-actions">
+          <button class="secondary-btn" id="copyRequest"><i data-lucide="copy"></i>复制收款信息</button>
+          <button class="primary-btn" id="markPaid"><i data-lucide="check"></i>确认已收款</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-backdrop" id="settingsModal" aria-hidden="true">
+      <div class="modal settings-modal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+        <button class="modal-close" data-close="settingsModal" aria-label="关闭"><i data-lucide="x"></i></button>
+        <div class="modal-heading">
+          <span class="modal-icon"><i data-lucide="scan-line"></i></span>
+          <div><p>PAYMENT SETTINGS</p><h2 id="settingsTitle">收款设置</h2></div>
+        </div>
+        <label class="field-label" for="ownerName">收款人名称</label>
+        <input class="text-input" id="ownerName" value="我" />
+        <label class="field-label">收款方式</label>
+        <div class="payment-methods">
+          <label><input type="radio" name="payMethod" value="微信" checked /><span class="method wechat"><i data-lucide="message-circle"></i>微信</span></label>
+          <label><input type="radio" name="payMethod" value="支付宝" /><span class="method alipay"><i data-lucide="badge-dollar-sign"></i>支付宝</span></label>
+        </div>
+        <label class="upload-zone" for="qrUpload">
+          <input type="file" id="qrUpload" accept="image/*" />
+          <img id="qrPreview" alt="收款码预览" />
+          <span id="uploadPrompt"><i data-lucide="image-up"></i><strong>选择收款码图片</strong><small>JPG 或 PNG</small></span>
+        </label>
+        <button class="primary-btn full" id="saveSettings"><i data-lucide="save"></i>保存设置</button>
+      </div>
+    </div>
+
+    <div class="modal-backdrop" id="addBillModal" aria-hidden="true">
+      <form class="modal bill-form" id="billForm" role="dialog" aria-modal="true" aria-labelledby="billFormTitle">
+        <button type="button" class="modal-close" data-close="addBillModal" aria-label="关闭"><i data-lucide="x"></i></button>
+        <div class="modal-heading">
+          <span class="modal-icon coral-bg"><i data-lucide="receipt-text"></i></span>
+          <div><p>NEW EXPENSE</p><h2 id="billFormTitle">新增账单</h2></div>
+        </div>
+        <div class="form-grid">
+          <label><span>账单名称</span><input name="title" required placeholder="例如：下午茶" /></label>
+          <label><span>商户</span><input name="merchant" required placeholder="商户名称" /></label>
+          <label><span>金额</span><input name="amount" required type="number" min="0.01" step="0.01" placeholder="0.00" /></label>
+          <label><span>日期</span><input name="date" required type="date" value="2026-07-19" /></label>
+        </div>
+        <fieldset>
+          <legend>参与分摊</legend>
+          <div id="participantChecks" class="check-grid"></div>
+        </fieldset>
+        <div class="form-result"><span>每人预计</span><strong id="perPersonEstimate">¥0.00</strong></div>
+        <button type="submit" class="primary-btn full"><i data-lucide="plus"></i>加入账单</button>
+      </form>
+    </div>
+
+    <div class="toast" id="toast"><i data-lucide="circle-check"></i><span></span></div>
+
+    <script src="assets/lucide.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
