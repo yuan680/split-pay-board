@@ -1,7 +1,7 @@
-const STORAGE_KEY = "split-pay-board-v4";
+const STORAGE_KEY = "split-pay-board-v5";
 
 const seedData = {
-  owner: { name: "我", method: "微信", qr: "assets/wechat-pay.png", paymentUrl: "" },
+  owner: { name: "我", method: "微信", qr: "assets/wechat-qr.png", paymentUrl: "" },
   people: [
     { id: "me", name: "我", role: "垫付人", color: "gray" },
     { id: "yujia", name: "玉家", role: "女生局成员", color: "green" },
@@ -221,9 +221,17 @@ function openPayment(personId) {
   document.querySelector("#jumpPay span").textContent = state.owner.paymentUrl ? "跳转支付" : `打开${state.owner.method}`;
   document.querySelector("#payBreakdown").innerHTML = lines.map((line) => `<div class="detail-line"><span>${line.bill.category}</span><strong>${money(line.amount)}</strong></div>`).join("");
   const image = document.querySelector("#qrImage");
+  const imageLink = document.querySelector("#qrImageLink");
   const empty = document.querySelector("#qrEmpty");
-  if (state.owner.qr) { image.src = state.owner.qr; image.style.display = "block"; empty.style.display = "none"; }
-  else { image.style.display = "none"; empty.style.display = "grid"; }
+  if (state.owner.qr) {
+    image.src = state.owner.qr;
+    imageLink.href = state.owner.qr;
+    imageLink.style.display = "grid";
+    empty.style.display = "none";
+  } else {
+    imageLink.style.display = "none";
+    empty.style.display = "grid";
+  }
   openModal("paymentModal");
 }
 

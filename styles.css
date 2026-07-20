@@ -198,8 +198,9 @@ svg { width: 18px; height: 18px; stroke-width: 1.8; }
 .payment-kicker { color: var(--muted); font-size: 11px; }
 .payment-modal h2 { margin: 7px 0 2px; font-family: Georgia, serif; font-size: 39px; }
 .payment-note { margin: 0 0 17px; color: var(--muted); font-size: 10px; }
-.qr-frame { width: 196px; height: 196px; margin: 0 auto 15px; padding: 9px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 6px; background: white; }
-.qr-frame img { display: none; max-width: 100%; max-height: 100%; -webkit-touch-callout: default; user-select: auto; }
+.qr-frame { width: 236px; height: 236px; margin: 0 auto 15px; padding: 9px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 6px; background: white; }
+.qr-image-link { display: none; width: 100%; height: 100%; place-items: center; }
+.qr-frame img { display: block; width: 100%; height: 100%; object-fit: contain; cursor: zoom-in; -webkit-touch-callout: default; user-select: auto; }
 #qrEmpty { display: grid; place-items: center; gap: 8px; color: var(--muted); }
 #qrEmpty svg { width: 58px; height: 58px; stroke-width: 1; }
 #qrEmpty strong { font-size: 11px; }
@@ -272,5 +273,5 @@ svg { width: 18px; height: 18px; stroke-width: 1.8; }
   .toolbar-row { align-items: stretch; }.toolbar-row select { width: 116px; min-width: 116px; }
   .bill-card { padding: 11px; grid-template-columns: 62px minmax(0,1fr) auto; gap: 10px; }.receipt-thumb { width: 62px; height: 62px; }.bill-copy h3 { font-size: 12px; }.bill-copy p { font-size: 9px; }.bill-total strong { font-size: 16px; }
   .people-grid { grid-template-columns: 1fr; }
-  .modal { padding: 24px 18px; }.modal-actions { grid-template-columns: 1fr; }.form-grid { grid-template-columns: 1fr; }.check-grid { grid-template-columns: 1fr 1fr; }
+  .modal { padding: 24px 18px; }.modal-actions { grid-template-columns: 1fr; }.form-grid { grid-template-columns: 1fr; }.check-grid { grid-template-columns: 1fr 1fr; }.qr-frame { width: min(248px, 76vw); height: min(248px, 76vw); }
 }
