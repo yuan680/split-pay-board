@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#f7f5ef" />
     <meta name="robots" content="noindex, nofollow, noarchive" />
     <title>聚会账本 · 分账总览</title>
-    <link rel="stylesheet" href="styles.css?v=9" />
+    <link rel="stylesheet" href="styles.css?v=10" />
   </head>
   <body>
     <div class="app-shell">
@@ -25,9 +25,6 @@
           </button>
           <button class="nav-item" data-view="bills">
             <i data-lucide="receipt-text"></i><span>账单流水</span>
-          </button>
-          <button class="nav-item" data-view="people">
-            <i data-lucide="users"></i><span>参与人</span>
           </button>
         </nav>
 
@@ -104,13 +101,6 @@
                 <div id="activityList" class="activity-list"></div>
               </section>
 
-              <section class="note-band">
-                <span><i data-lucide="info"></i></span>
-                <div>
-                  <strong>午饭分摊口径</strong>
-                  <p>午饭 315 元按 6 人均分，含小李哥。KTV 138 元只算你、佩琪、月如、桐桐 4 人。</p>
-                </div>
-              </section>
             </aside>
           </div>
         </section>
@@ -127,19 +117,12 @@
           <div id="billList" class="bill-list"></div>
         </section>
 
-        <section id="peopleView" class="view">
-          <div class="people-headline">
-            <div><h2>参与人</h2><p>本次聚会共 6 人，垫付人的自付份额计入账单，但不进入待收款。</p></div>
-          </div>
-          <div id="peopleGrid" class="people-grid"></div>
-        </section>
       </main>
     </div>
 
     <nav class="mobile-nav" aria-label="手机端导航">
       <button class="active" data-view="overview"><i data-lucide="layout-dashboard"></i><span>分账</span></button>
       <button data-view="bills"><i data-lucide="receipt-text"></i><span>流水</span></button>
-      <button data-view="people"><i data-lucide="users"></i><span>成员</span></button>
       <button id="mobileSettings" aria-hidden="true"><i data-lucide="qr-code"></i><span>设置</span></button>
     </nav>
 
@@ -218,6 +201,6 @@
     <div class="toast" id="toast"><i data-lucide="circle-check"></i><span></span></div>
 
     <script src="assets/lucide.min.js"></script>
-    <script src="app.js?v=9"></script>
+    <script src="app.js?v=10"></script>
   </body>
 </html>

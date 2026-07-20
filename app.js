@@ -35,7 +35,7 @@ const seedData = {
     { id: "peiqi", name: "佩琪", role: "女生局成员", color: "coral" },
     { id: "yueru", name: "月如", role: "女生局成员", color: "ochre" },
     { id: "tongtong", name: "桐桐", role: "女生局成员", color: "blue" },
-    { id: "boyfriend", name: "小李哥", role: "午饭加入", color: "gray" }
+    { id: "boyfriend", name: "小李", role: "午饭加入", color: "gray" }
   ],
   bills: [
     {
@@ -198,6 +198,7 @@ function renderBills() {
 }
 
 function renderPeople() {
+  if (!document.querySelector("#peopleGrid")) return;
   const paid = paidIds();
   document.querySelector("#peopleGrid").innerHTML = state.people.map((person) => {
     const due = dueFor(person.id);
