@@ -1,7 +1,12 @@
-const STORAGE_KEY = "split-pay-board-v5";
+const STORAGE_KEY = "split-pay-board-v6";
 
 const seedData = {
-  owner: { name: "我", method: "微信", qr: "assets/wechat-qr.png", paymentUrl: "" },
+  owner: {
+    name: "我",
+    method: "微信",
+    qr: "assets/wechat-qr.png",
+    paymentUrl: "wxp://f2f0VLIaTxIP5I596o3y44jm6p-cqXPH5D9yOGaIzJb99i_5N6eBi7OTSBu5gy6FjuCR"
+  },
   people: [
     { id: "me", name: "我", role: "垫付人", color: "gray" },
     { id: "yujia", name: "玉家", role: "女生局成员", color: "green" },
@@ -218,7 +223,7 @@ function openPayment(personId) {
   document.querySelector("#payPersonName").textContent = person.name;
   document.querySelector("#paymentTitle").textContent = money(dueFor(personId));
   document.querySelector("#paymentNote").textContent = `${state.owner.method}收款 · 佛山女生局`;
-  document.querySelector("#jumpPay span").textContent = state.owner.paymentUrl ? "跳转支付" : `打开${state.owner.method}`;
+  document.querySelector("#jumpPay span").textContent = state.owner.paymentUrl ? "打开支付" : `打开${state.owner.method}`;
   document.querySelector("#payBreakdown").innerHTML = lines.map((line) => `<div class="detail-line"><span>${line.bill.category}</span><strong>${money(line.amount)}</strong></div>`).join("");
   const image = document.querySelector("#qrImage");
   const imageLink = document.querySelector("#qrImageLink");
@@ -296,7 +301,7 @@ document.querySelector("#jumpPay").addEventListener("click", () => {
   const target = (configured || fallback)
     .replaceAll("{amount}", encodeURIComponent(amount))
     .replaceAll("{name}", encodeURIComponent(person.name));
-  if (!/^(https?:\/\/|alipays:\/\/|weixin:\/\/)/i.test(target)) {
+  if (!/^(https?:\/\/|alipays:\/\/|weixin:\/\/|wxp:\/\/)/i.test(target)) {
     showToast("支付链接格式不正确");
     return;
   }
