@@ -77,7 +77,7 @@ svg { width: 18px; height: 18px; stroke-width: 1.8; }
 }
 .primary-btn { color: white; background: var(--green); border: 1px solid var(--green); }
 .primary-btn:hover { background: var(--green-dark); }
-.secondary-btn { color: var(--ink); background: white; border: 1px solid var(--line); }
+.secondary-btn { color: var(--ink); background: white; border: 1px solid var(--line); text-decoration: none; }
 .full { width: 100%; }
 .view { display: none; }
 .view.active { display: block; }

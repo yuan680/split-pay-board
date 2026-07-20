@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#f7f5ef" />
     <meta name="robots" content="noindex, nofollow, noarchive" />
     <title>这顿我先垫 · 分账看板</title>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=7" />
   </head>
   <body>
     <div class="app-shell">
@@ -150,7 +150,7 @@
         <h2 id="paymentTitle">¥0.00</h2>
         <p class="payment-note" id="paymentNote">聚会分账</p>
         <div class="qr-frame" id="qrFrame">
-          <a id="qrImageLink" class="qr-image-link" href="#" target="_blank" rel="noopener" aria-label="查看收款二维码大图">
+          <a id="qrImageLink" class="qr-image-link" href="#" target="_self" aria-label="查看收款二维码大图">
             <img id="qrImage" alt="收款二维码" />
           </a>
           <div id="qrEmpty"><i data-lucide="qr-code"></i><strong>收款码未配置</strong></div>
@@ -158,7 +158,7 @@
         <div class="pay-breakdown" id="payBreakdown"></div>
         <div class="modal-actions">
           <button class="secondary-btn" id="copyRequest"><i data-lucide="copy"></i>复制收款信息</button>
-          <button class="secondary-btn" id="jumpPay"><i data-lucide="external-link"></i><span>打开微信</span></button>
+          <a class="secondary-btn" id="jumpPay" href="#"><i data-lucide="external-link"></i><span>打开微信</span></a>
           <button class="primary-btn" id="markPaid"><i data-lucide="check"></i>确认已收款</button>
         </div>
       </div>
@@ -214,6 +214,6 @@
     <div class="toast" id="toast"><i data-lucide="circle-check"></i><span></span></div>
 
     <script src="assets/lucide.min.js"></script>
-    <script src="app.js"></script>
+    <script src="app.js?v=7"></script>
   </body>
 </html>

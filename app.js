@@ -223,7 +223,10 @@ function openPayment(personId) {
   document.querySelector("#payPersonName").textContent = person.name;
   document.querySelector("#paymentTitle").textContent = money(dueFor(personId));
   document.querySelector("#paymentNote").textContent = `${state.owner.method}收款 · 佛山女生局`;
-  document.querySelector("#jumpPay span").textContent = state.owner.paymentUrl ? "打开支付" : `打开${state.owner.method}`;
+  const jumpPay = document.querySelector("#jumpPay");
+  jumpPay.href = paymentTarget(personId);
+  jumpPay.target = /^https?:\/\//i.test(jumpPay.href) ? "_blank" : "_self";
+  jumpPay.querySelector("span").textContent = state.owner.paymentUrl ? "打开支付" : `打开${state.owner.method}`;
   document.querySelector("#payBreakdown").innerHTML = lines.map((line) => `<div class="detail-line"><span>${line.bill.category}</span><strong>${money(line.amount)}</strong></div>`).join("");
   const image = document.querySelector("#qrImage");
   const imageLink = document.querySelector("#qrImageLink");
@@ -238,6 +241,17 @@ function openPayment(personId) {
     empty.style.display = "grid";
   }
   openModal("paymentModal");
+}
+
+function paymentTarget(personId) {
+  const person = personById(personId);
+  const amount = dueFor(personId).toFixed(2);
+  const fallback = state.owner.method === "支付宝"
+    ? "alipays://platformapi/startapp?appId=20000056"
+    : "weixin://";
+  return (state.owner.paymentUrl || fallback)
+    .replaceAll("{amount}", encodeURIComponent(amount))
+    .replaceAll("{name}", encodeURIComponent(person.name));
 }
 
 function markPaid() {
@@ -288,24 +302,6 @@ document.querySelector("#copyRequest").addEventListener("click", async () => {
   const text = `${person.name}，这次聚会需要支付 ${money(dueFor(activePayPerson))}，包含：${allocationsFor(activePayPerson).map((line) => `${line.bill.category} ${money(line.amount)}`).join("、")}。`;
   try { await navigator.clipboard.writeText(text); showToast("收款信息已复制"); }
   catch { showToast("当前浏览器未开放剪贴板权限"); }
-});
-
-document.querySelector("#jumpPay").addEventListener("click", () => {
-  if (!activePayPerson) return;
-  const person = personById(activePayPerson);
-  const amount = dueFor(activePayPerson).toFixed(2);
-  const fallback = state.owner.method === "支付宝"
-    ? "alipays://platformapi/startapp?appId=20000056"
-    : "weixin://";
-  const configured = (state.owner.paymentUrl || "").trim();
-  const target = (configured || fallback)
-    .replaceAll("{amount}", encodeURIComponent(amount))
-    .replaceAll("{name}", encodeURIComponent(person.name));
-  if (!/^(https?:\/\/|alipays:\/\/|weixin:\/\/|wxp:\/\/)/i.test(target)) {
-    showToast("支付链接格式不正确");
-    return;
-  }
-  window.location.href = target;
 });
 
 document.querySelector("#qrUpload").addEventListener("change", (event) => {
