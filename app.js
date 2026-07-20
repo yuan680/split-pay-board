@@ -1,4 +1,4 @@
-const STORAGE_KEY = "split-pay-board-v9";
+const STORAGE_KEY = "split-pay-board-v10";
 
 const seedData = {
   owner: {
@@ -111,6 +111,7 @@ function renderAll() {
 
 function renderSummary() {
   const total = totalToCollect();
+  document.querySelector("#paidPeople").textContent = `${state.people.length} 人`;
   const collected = collectedAmount();
   const remaining = Math.max(0, total - collected);
   const percentage = total ? Math.round((collected / total) * 100) : 0;
@@ -405,4 +406,14 @@ document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") document.querySelectorAll(".modal-backdrop.open").forEach((modal) => closeModal(modal.id));
 });
 
+function switchView(name) {
+  const titles = { overview: ["GROUP LEDGER", "分账总览"], bills: ["TRANSACTION RECORDS", "账单流水"], people: ["PARTICIPANTS", "参与人"] };
+  document.querySelectorAll(".view").forEach((view) => view.classList.toggle("active", view.id === `${name}View`));
+  document.querySelectorAll("[data-view]").forEach((button) => button.classList.toggle("active", button.dataset.view === name));
+  document.querySelector("#viewEyebrow").textContent = titles[name][0];
+  document.querySelector("#viewTitle").textContent = titles[name][1];
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
 renderAll();
+document.querySelector("#paidPeople").textContent = `${state.people.length} 人`;

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#f7f5ef" />
     <meta name="robots" content="noindex, nofollow, noarchive" />
-    <title>这顿我先垫 · 分账看板</title>
+    <title>聚会账本 · 分账总览</title>
     <link rel="stylesheet" href="styles.css?v=9" />
   </head>
   <body>
@@ -14,14 +14,14 @@
         <div class="brand">
           <div class="brand-mark">垫</div>
           <div>
-            <strong>这顿我先垫</strong>
+            <strong>聚会账本</strong>
             <span>佛山女生局 · 7月18–19日</span>
           </div>
         </div>
 
         <nav class="nav-list" aria-label="主导航">
           <button class="nav-item active" data-view="overview">
-            <i data-lucide="layout-dashboard"></i><span>收款总览</span>
+            <i data-lucide="layout-dashboard"></i><span>分账总览</span>
           </button>
           <button class="nav-item" data-view="bills">
             <i data-lucide="receipt-text"></i><span>账单流水</span>
@@ -44,8 +44,8 @@
       <main class="main">
         <header class="topbar">
           <div>
-            <p class="eyebrow" id="viewEyebrow">COLLECTION BOARD</p>
-            <h1 id="viewTitle">收款总览</h1>
+            <p class="eyebrow" id="viewEyebrow">GROUP LEDGER</p>
+            <h1 id="viewTitle">分账总览</h1>
           </div>
           <div class="top-actions">
             <button class="icon-btn" id="resetData" title="恢复示例数据" aria-label="恢复示例数据">
@@ -60,7 +60,7 @@
         <section id="overviewView" class="view active">
           <div class="summary-strip">
             <article class="summary-main">
-              <span class="metric-label">待收金额</span>
+              <span class="metric-label">待结算金额</span>
               <div class="metric-value" id="outstandingTotal">¥0.00</div>
               <div class="progress-line"><span id="collectionProgress"></span></div>
               <p><strong id="collectedTotal">¥0.00</strong> 已收 · <span id="progressText">0%</span></p>
@@ -71,11 +71,11 @@
             </article>
             <article class="summary-cell">
               <span class="metric-icon coral"><i data-lucide="users-round"></i></span>
-              <div><span>待付款</span><strong id="pendingPeople">0 人</strong></div>
+              <div><span>待结算人数</span><strong id="pendingPeople">0 人</strong></div>
             </article>
             <article class="summary-cell">
               <span class="metric-icon ochre"><i data-lucide="circle-check-big"></i></span>
-              <div><span>已结清</span><strong id="paidPeople">0 人</strong></div>
+              <div><span>参与人数</span><strong id="paidPeople">6 人</strong></div>
             </article>
           </div>
 
@@ -83,11 +83,11 @@
             <section class="panel collection-panel">
               <div class="panel-head">
                 <div>
-                  <h2>待收款</h2>
+              <h2>待结算</h2>
                   <p>点击姓名展开对应账单</p>
                 </div>
                 <div class="segmented" role="group" aria-label="收款筛选">
-                  <button class="active" data-filter="pending">待收</button>
+                  <button class="active" data-filter="pending">全部待结算</button>
                   <button data-filter="paid">已收</button>
                   <button data-filter="all">全部</button>
                 </div>
@@ -137,10 +137,10 @@
     </div>
 
     <nav class="mobile-nav" aria-label="手机端导航">
-      <button class="active" data-view="overview"><i data-lucide="layout-dashboard"></i><span>总览</span></button>
+      <button class="active" data-view="overview"><i data-lucide="layout-dashboard"></i><span>分账</span></button>
       <button data-view="bills"><i data-lucide="receipt-text"></i><span>流水</span></button>
       <button data-view="people"><i data-lucide="users"></i><span>成员</span></button>
-      <button id="mobileSettings"><i data-lucide="qr-code"></i><span>收款码</span></button>
+      <button id="mobileSettings" aria-hidden="true"><i data-lucide="qr-code"></i><span>设置</span></button>
     </nav>
 
     <div class="modal-backdrop" id="paymentModal" aria-hidden="true">

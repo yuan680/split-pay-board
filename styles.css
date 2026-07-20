@@ -241,6 +241,12 @@ svg { width: 18px; height: 18px; stroke-width: 1.8; }
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
 .mobile-nav { display: none; }
 
+/* This is a ledger-only board. Payment controls stay out of the user-facing surface. */
+#openSettings, #mobileSettings, #paymentModal, #settingsModal,
+.mini-pay, .detail-actions, .status-dot, .segmented button[data-filter="paid"],
+.payment-modal, .settings-modal { display: none !important; }
+.summary-main .progress-line, .summary-main > p { display: none; }
+
 @media (max-width: 1080px) {
   .summary-strip { grid-template-columns: 1.35fr repeat(3, .75fr); }
   .summary-cell { padding: 22px 15px; display: block; }.summary-cell .metric-icon { margin-bottom: 13px; }
@@ -264,7 +270,7 @@ svg { width: 18px; height: 18px; stroke-width: 1.8; }
   .summary-cell + .summary-cell { border-left: 1px solid var(--line); }
   .content-grid { grid-template-columns: 1fr; }
   .right-rail { grid-template-columns: 1fr 1fr; }.activity-panel { min-width: 0; }.note-band { min-width: 0; }
-  .mobile-nav { position: fixed; z-index: 80; left: 0; right: 0; bottom: 0; height: 64px; display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); background: rgba(255,255,255,.96); backdrop-filter: blur(12px); }
+  .mobile-nav { position: fixed; z-index: 80; left: 0; right: 0; bottom: 0; height: 64px; display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); background: rgba(255,255,255,.96); backdrop-filter: blur(12px); }
   .mobile-nav button { display: grid; place-items: center; align-content: center; gap: 3px; border: 0; background: transparent; color: var(--muted); font-size: 9px; }.mobile-nav button.active { color: var(--green); }.mobile-nav svg { width: 19px; height: 19px; }
   .bill-card { grid-template-columns: 72px 1fr auto; }.receipt-thumb { width: 72px; height: 68px; }.bill-meta { display: none; }
 }
